@@ -1,0 +1,25 @@
+backend:
+  name: github
+  repo: abdalhalem-alfakhrany/learn_astro
+  branch: master
+  # base_url: https://YOUR-OAUTH-WORKER.workers.dev   # needed on Cloudflare Pages
+
+local_backend: true   # remove before production
+
+media_folder: public/images/products
+public_folder: /images/products
+
+collections:
+  - name: products
+    label: Products
+    folder: src/content/products
+    create: true
+    extension: md
+    slug: "{{slug}}"
+    fields:
+      - { label: Name, name: title, widget: string }
+      - { label: Category, name: category, widget: string }
+      - { label: Image, name: image, widget: image }
+      - { label: Origin, name: origin, widget: string, required: false }
+      - { label: Minimum order, name: moq, widget: string, required: false }
+      - { label: Description, name: body, widget: markdown }

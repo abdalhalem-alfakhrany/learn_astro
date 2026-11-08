@@ -1,0 +1,19 @@
+---
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const products = await getCollection('products');
+  return products.map((p) => ({ params: { id: p.id }, props: { product: p } }));
+}
+
+const { product } = Astro.props;
+const { Content } = await render(product);
+---
+<article class="mx-auto max-w-3xl p-6">
+  <img src={product.data.image} alt={product.data.title} class="w-full rounded-lg" />
+  <h1 class="mt-4 text-3xl font-bold">{product.data.title}</h1>
+  <p>Origin: {product.data.origin} · MOQ: {product.data.moq}</p>
+  <div class="prose mt-4"><Content /></div>
+  <a href={`/contact?product=${encodeURIComponent(product.data.title)}`}
+     class="mt-6 inline-block rounded bg-black px-5 py-3 text-white">Request a quote</a>
+</article>
